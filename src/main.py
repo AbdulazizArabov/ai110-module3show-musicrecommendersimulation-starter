@@ -13,37 +13,27 @@ from recommender import load_songs, recommend_songs
 
 
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    songs = load_songs("data/songs.csv")
+    print(f"Loaded songs: {len(songs)}")
 
     # User taste profile — keys align with UserProfile dataclass fields
     # and extend it with target values for every scored song feature.
     user_prefs = {
-        # --- Categorical preferences (matched exactly) ---
-        "favorite_genre": "pop",       # strongest signal; worth 3.0 pts on match
-        "favorite_mood": "happy",      # second strongest; worth 2.0 pts on match
-
-        # --- Numerical targets (scored by proximity, range 0.0–1.0) ---
-        "target_energy": 0.80,         # wants upbeat, energetic tracks
-        "target_valence": 0.80,        # wants positive, feel-good sound
-        "target_danceability": 0.85,   # wants groovy, rhythmically engaging tracks
-
-        # --- Boolean preference ---
-        "likes_acoustic": False,       # prefers produced/electric sound over acoustic
-
-        # --- Optional tempo hint (BPM, not 0–1 scale) ---
-        "target_tempo_bpm": 120,       # typical pop/dance tempo
+        "genre":    "pop",   # matched exactly against song["genre"]
+        "mood":     "happy", # matched exactly against song["mood"]
+        "energy":   0.80,    # proximity scored against song["energy"]
     }
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
     print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+    separator = "-" * 40
+    for song, score, explanation in recommendations:
+        print(f"{song['title']} by {song['artist']}")
+        print(f"Score: {score:.2f}")
+        for reason in explanation.split(", "):
+            print(f"  * {reason}")
+        print(separator)
 
 
 if __name__ == "__main__":
