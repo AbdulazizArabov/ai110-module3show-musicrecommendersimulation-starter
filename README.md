@@ -17,17 +17,107 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+Real-world music recommenders like Spotify or YouTube Music analyze thousands of signals — listening history, collaborative filtering across millions of users, audio features, and even contextual data like time of day — to predict what you want to hear next. Our simulation strips that down to the essentials: instead of learning from behavior, we explicitly define a user's taste as a profile and score every song against it using a weighted formula. This version prioritizes transparency over complexity. Every recommendation can be explained in plain terms ("this song matched your preferred genre and has an energy level close to your target"), which mirrors how a rule-based recommender works before machine learning is layered on top.
 
-Some prompts to answer:
+### Song Features Used
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+Each `Song` object carries the following attributes that factor into scoring:
 
-You can include a simple diagram or bullet list if helpful.
+- `genre` — categorical label (e.g. `"pop"`, `"lofi"`) matched against the user's favorite genre
+- `mood` — categorical label (e.g. `"happy"`, `"chill"`) matched against the user's favorite mood
+- `energy` — float in [0.0, 1.0]; scored by proximity to the user's target energy level
+- `acousticness` — float in [0.0, 1.0]; used to match whether the user prefers acoustic-style tracks
+- `tempo_bpm` — beats per minute; available for future scoring experiments
+- `valence` — float in [0.0, 1.0]; musical positivity, available for tuning
+- `danceability` — float in [0.0, 1.0]; available for tuning
+
+### UserProfile Features Used
+
+Each `UserProfile` stores:
+
+- `favorite_genre` — the genre the user most wants to hear
+- `favorite_mood` — the mood the user is looking for
+- `target_energy` — a float in [0.0, 1.0] representing how energetic the user wants songs to feel
+- `likes_acoustic` — boolean indicating whether the user prefers acoustic-style tracks
+
+### Scoring and Ranking
+
+The `Recommender` computes a weighted score for each song:
+
+- Genre match: **3.0 pts** (highest weight — genre mismatch is a hard signal)
+- Mood match: **2.0 pts** (shapes the overall feel of the listening session)
+- Energy proximity: **1.5 × (1 - |song.energy - user.target_energy|)**
+- Acoustic match: **1.0 pt**
+
+Songs are then ranked by total score (highest first) and the top `k` are returned.
+
+### Algorithm Recipe
+
+The finalized scoring formula applied to every song in the catalog:
+
+```
+score = 0.0
+
+# Categorical — exact match
+if song.genre == user.favorite_genre:              score += 3.0
+if song.mood  == user.favorite_mood:               score += 2.0
+
+# Numerical proximity — all features on 0–1 scale
+score += (1 - abs(song.energy       - user.target_energy))       * 1.5
+score += (1 - abs(song.valence      - user.target_valence))      * 1.0
+score += (1 - abs(song.danceability - user.target_danceability)) * 1.0
+
+# Boolean penalty — punish highly acoustic songs for non-acoustic listeners
+if not user.likes_acoustic and song.acousticness > 0.7:          score -= 0.5
+
+# Tempo proximity — normalized over the dataset's BPM span (~60–168)
+score += (1 - abs(song.tempo_bpm - user.target_tempo_bpm) / 108) * 0.5
+```
+
+**Maximum possible score: ~8.5.** Each song's final score and a plain-language explanation string are returned together so every recommendation is auditable.
+
+### Known Biases and Limitations
+
+- **Genre over-prioritization.** A 3.0-point genre bonus is so large that a perfectly mood- and energy-matched song in the wrong genre will almost always rank below a mediocre same-genre song. Great cross-genre discoveries are suppressed by design.
+- **Mood sparsity.** With 16 distinct moods across only 20 songs, most user mood preferences will never match any song exactly, making the +2.0 mood bonus rarely fire and effectively reducing the system to genre + numeric signals.
+- **No diversity enforcement.** The top-K list can return several nearly identical songs (e.g., multiple high-energy pop tracks) because we rank purely by score with no penalty for redundancy.
+- **Static taste profile.** The user profile is a fixed snapshot. The system has no way to learn that a user liked or skipped a recommendation, so it gives the same results on every run.
+- **Small catalog bias.** With only 20 songs, underrepresented genres (e.g., reggae, funk, metal — one song each) are effectively invisible unless the user explicitly prefers them.
+
+### Data Flow
+
+```mermaid
+flowchart TD
+    A([User Preferences\ngenre · mood · energy\nvalence · danceability\nacousticness · tempo]) --> C
+
+    B[(data/songs.csv\n20 songs)] -->|load_songs| D[Song List]
+
+    D --> C[recommend_songs]
+    A --> C
+
+    C --> E{For each song\nin list}
+
+    E --> F[score_song]
+
+    F --> F1[+3.0 genre match?]
+    F --> F2[+2.0 mood match?]
+    F --> F3[+1.5 × energy proximity]
+    F --> F4[+1.0 × valence proximity]
+    F --> F5[+1.0 × danceability proximity]
+    F --> F6[−0.5 acousticness penalty?]
+    F --> F7[+0.5 × tempo proximity]
+
+    F1 & F2 & F3 & F4 & F5 & F6 & F7 --> G[Total Score\n+ explanation string]
+
+    G --> H[(Scored Song List\nsong · score · reason)]
+
+    E -->|next song| E
+    E -->|all songs done| H
+
+    H --> I[Sort descending\nby score]
+    I --> J[Slice top K]
+    J --> K([Top K Recommendations\ntitle · score · explanation])
+```
 
 ---
 
