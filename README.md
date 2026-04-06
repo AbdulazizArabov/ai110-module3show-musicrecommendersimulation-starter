@@ -121,36 +121,7 @@ flowchart TD
 
 ### Sample Terminal Output
 
-```
-Loaded songs: 20
-
-Top recommendations:
-
-Sunrise City by Neon Echo
-Score: 4.48
-  * genre match (+2.0)
-  * mood match (+1.5)
-  * energy proximity (+1.0)
-----------------------------------------
-Gym Hero by Max Pulse
-Score: 2.87
-  * genre match (+2.0)
-  * energy proximity (+0.9)
-----------------------------------------
-Rooftop Lights by Indigo Parade
-Score: 2.46
-  * mood match (+1.5)
-  * energy proximity (+1.0)
-----------------------------------------
-Golden Chain by Verse Theory
-Score: 1.00
-  * energy proximity (+1.0)
-----------------------------------------
-Groove Architect by The Funk Lab
-Score: 0.98
-  * energy proximity (+1.0)
-----------------------------------------
-```
+![Terminal output showing top 5 recommendations for a pop/happy user profile](assets/terminal_output.png.png)
 
 ---
 

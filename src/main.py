@@ -9,11 +9,13 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
+from pathlib import Path
 from recommender import load_songs, recommend_songs
 
+CSV_PATH = Path(__file__).parent.parent / "data" / "songs.csv"
 
 def main() -> None:
-    songs = load_songs("data/songs.csv")
+    songs = load_songs(CSV_PATH)
     print(f"Loaded songs: {len(songs)}")
 
     # User taste profile — keys align with UserProfile dataclass fields
