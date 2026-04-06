@@ -121,7 +121,7 @@ flowchart TD
 
 ### Sample Terminal Output
 
-![Terminal output showing top 5 recommendations for a pop/happy user profile](assets/terminal_output.png.png)
+![Terminal output showing top 5 recommendations for a pop/happy user profile](assets/terminal_output.png)
 
 ---
 
