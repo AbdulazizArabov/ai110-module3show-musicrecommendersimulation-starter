@@ -1,21 +1,21 @@
-id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
-11,Golden Chain,Verse Theory,hip-hop,energetic,0.80,97,0.72,0.87,0.12
-12,Velvet Midnight,Simone Ray,r&b,romantic,0.55,86,0.78,0.69,0.44
-13,Winter Sonata,Clara Ashby,classical,peaceful,0.22,64,0.63,0.31,0.97
-14,Gravel Road,The Hollow Pines,country,nostalgic,0.48,94,0.74,0.58,0.82
-15,Drop Zone,Staticwave,electronic,euphoric,0.95,140,0.85,0.94,0.04
-16,Iron Curtain,Bladefire,metal,angry,0.97,168,0.31,0.52,0.06
-17,Fog and Feathers,Wren Cole,folk,melancholic,0.33,76,0.44,0.49,0.91
-18,Island Time,Coral Drift,reggae,uplifting,0.61,82,0.88,0.75,0.67
-19,Empty Frames,Sable Voice,soul,sad,0.44,70,0.38,0.46,0.76
-20,Groove Architect,The Funk Lab,funk,playful,0.78,108,0.89,0.91,0.21
+id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,popularity,release_decade,mood_tag_1,mood_tag_2,mood_tag_3
+1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,72,2020,uplifting,bright,danceable
+2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,58,2010,calm,focused,dreamy
+3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,81,2010,aggressive,powerful,driving
+4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,45,2020,calm,nostalgic,peaceful
+5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,76,2020,energetic,aggressive,motivating
+6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,39,2010,dreamy,atmospheric,peaceful
+7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,52,2010,nostalgic,warm,laid-back
+8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,63,2010,atmospheric,nostalgic,cinematic
+9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,49,2020,calm,rhythmic,focused
+10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,67,2020,uplifting,bright,romantic
+11,Golden Chain,Verse Theory,hip-hop,energetic,0.80,97,0.72,0.87,0.12,74,2010,confident,driving,powerful
+12,Velvet Midnight,Simone Ray,r&b,romantic,0.55,86,0.78,0.69,0.44,61,2010,sensual,warm,nostalgic
+13,Winter Sonata,Clara Ashby,classical,peaceful,0.22,64,0.63,0.31,0.97,38,2000,calm,nostalgic,atmospheric
+14,Gravel Road,The Hollow Pines,country,nostalgic,0.48,94,0.74,0.58,0.82,55,2010,nostalgic,warm,melancholic
+15,Drop Zone,Staticwave,electronic,euphoric,0.95,140,0.85,0.94,0.04,79,2020,energetic,euphoric,driving
+16,Iron Curtain,Bladefire,metal,angry,0.97,168,0.31,0.52,0.06,68,2010,aggressive,powerful,dark
+17,Fog and Feathers,Wren Cole,folk,melancholic,0.33,76,0.44,0.49,0.91,44,2010,melancholic,nostalgic,atmospheric
+18,Island Time,Coral Drift,reggae,uplifting,0.61,82,0.88,0.75,0.67,57,2010,uplifting,warm,laid-back
+19,Empty Frames,Sable Voice,soul,sad,0.44,70,0.38,0.46,0.76,42,2000,melancholic,dark,atmospheric
+20,Groove Architect,The Funk Lab,funk,playful,0.78,108,0.89,0.91,0.21,71,2010,playful,energetic,driving
