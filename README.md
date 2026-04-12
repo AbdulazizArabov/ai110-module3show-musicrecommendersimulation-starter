@@ -123,6 +123,8 @@ flowchart TD
 
 ![Terminal output showing top 5 recommendations for a pop/happy user profile](assets/terminal_output.png)
 
+![Latest terminal output with tabulate table and scoring modes](assets/latestScreen.png)
+
 ---
 
 ## Getting Started
